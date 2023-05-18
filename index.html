@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>OPT Screen</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1 0 auto;
+    }
+
+    .ncls {
+      margin-left: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo center">OPT Screen</a>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <div class="container">
+      <div class="row">
+        <div class="col s12 m6 offset-m3">
+          <div class="card">
+            <div class="card-content">
+              <span class="card-title center-align">Enter OTP</span>
+              <div class="row" style="display: flex; align-items: center; justify-content: center;">
+                <div class="col s1" style="margin-left: 0;">
+                  <input type="text" class="otp-digit" maxlength="1">
+                </div>
+                <div class="col s1" style="margin-left: 0;">
+                  <input type="text" class="otp-digit" maxlength="1">
+                </div>
+                <div class="col s1" style="margin-left: 0;">
+                  <input type="text" class="otp-digit" maxlength="1">
+                </div>
+                <div class="col s1" style="margin-left: 0;">
+                  <input type="text" class="otp-digit" maxlength="1">
+                </div>
+                <div class="col s1" style="margin-left: 0;">
+                  <input type="text" class="otp-digit" maxlength="1">
+                </div>
+                <div class="col s1" style="margin-left: 0;">
+                  <input type="text" class="otp-digit" maxlength="1">
+                </div>
+              </div>
+            </div>
+            <div class="card-action">
+              <a href="#" class="waves-effect waves-light btn">Apply Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="page-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col s12">
+          <p class="center-align">All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+
+</html>
+<script>
+  const otpDigits = document.getElementsByClassName("otp-digit");
+
+  for (let i = 0; i < otpDigits.length; i++) {
+
+    otpDigits[i].addEventListener("input", function () {
+      debugger;
+      const enteredValue = this.value;
+      const onlyNumbers = /^[0-9]*$/;
+
+      if (!onlyNumbers.test(enteredValue)) {
+        //alert("You are trying to add text! Only numbers allowed.")
+        this.value = "";
+        return;
+      }
+
+      if (enteredValue.length >= 1) {
+        if (i < otpDigits.length - 1) {
+          otpDigits[i + 1].select();
+        }
+        const excessLength = enteredValue.length - 1;
+        if (excessLength > 0) {
+          this.value = enteredValue.substr(0, 1);
+        }
+      } else if (enteredValue.length === 0 && i > 0) {
+        otpDigits[i - 1].select();
+      }
+    });
+
+    otpDigits[i].addEventListener("paste", function (event) {
+      const clipboardData = event.clipboardData || window.clipboardData;
+      event.preventDefault();
+      const pastedText = clipboardData.getData("text");
+      const onlyNumbers = /^[0-9]*$/;
+
+      if (!onlyNumbers.test(pastedText)) {
+        //alert('Your Copied code contains text')
+        return;
+      }
+
+      let currentIndex = i;
+
+      for (let j = 0; j < pastedText.length && currentIndex < otpDigits.length; j++) {
+        otpDigits[currentIndex].value = pastedText[j];
+        currentIndex++;
+      }
+
+    });
+  }
+</script>
+
+</html>
